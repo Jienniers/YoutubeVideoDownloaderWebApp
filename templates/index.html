@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jabyt</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- <link rel="icon" src="{{ url_for('static', filename='images/small logo.png') }}"> -->
+</head>
+<body>
+    <div class="_body">
+        <div class="_header">
+            <img src="{{ url_for('static', filename='images/small logo.png') }}", alt="">
+        </div>
+        <div class="title_div">
+            <h1 class="_title">
+                Download Your Favourite Youtube Video
+            </h1>
+        </div>
+        <form action="{{ url_for('home') }}" method="post" class="bubble-box">
+        <h1>Enter URL</h1>
+        <input type="text" id="myText" name="search_url" placeholder="Enter the link of the video">
+        <button name="search" value="Search" id="in-between">Search</button>
+        <h1 style="font-size: small; margin-top: 30px;">{{ title }}</h1>
+        <img src="{{ thumbnail }}" alt="Displayed Image" class="_thumbnail" style="visibility: {{un_visible}};">
+        <button type="submit" name="download_button_mine" class="download_button" style="visibility: {{un_visible}};">Download</button>
+    </div>
+    <script>
+        function submitForm() {
+            var inputValue = document.getElementById('myText').value;
+            document.getElementById('myText').value = '';
+        }
+        </script>
+
+</body>
+</html>
