@@ -37,25 +37,29 @@ body {
     background-color: #15131d;
   } */
 
-.title_div ._title{
+  .title_div ._title {
     font-family: 'Roboto', sans-serif;
     color: white;
     text-align: center;
     font-size: 50px;
-} 
-.title_div{
-    margin-top: 70px;
+
 }
+
+.title_div {
+    margin-top: 70px;
+    z-index: 1; /* Ensures that the title is always on top */
+    margin-bottom: 50px;
+}
+
 /* CSS for the bubble box */
 .bubble-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative; /* Changed from absolute to relative */
+    top: 0;
+    left: 0;
+    margin: 0 auto;
     width: 700px; /* Set the desired width */
-    height: 450px;
+    height: 530px;
     padding: 20px; /* Adjust padding as needed */
-    /* background: linear-gradient(to bottom right, #3498db, #1abc9c);  */
     background-color: #312e3f;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow */
@@ -64,7 +68,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Align items to the start (top) */
-  }
+    z-index: 0; /* Ensures that the bubble box is behind the title */
+}
+
   
   .bubble-box h1 {
     font-family: 'Roboto', sans-serif;
@@ -102,6 +108,7 @@ input[type="text"],
 .bubble-box input{
   outline: none;
   border: 1px solid #ccc; /* Add your custom border style if needed */
+  height: 8%;
 }
 
 .bubble-box button {
