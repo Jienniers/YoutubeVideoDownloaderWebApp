@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 def get_video_resolutions(url):
     try:
-        yt = YouTube(url)
+        yt = YouTube(url, use_po_token=True)
         highest_resolution = yt.streams.get_highest_resolution()
         return [f"{highest_resolution.resolution} (Highest)"]
     except Exception as e:
@@ -19,7 +19,7 @@ def get_video_resolutions(url):
 
 def download_video(url):
     try:
-        yt = YouTube(url)
+        yt = YouTube(url, use_po_token=True)
         highest_resolution = yt.streams.filter(adaptive=True).filter(mime_type='video/mp4').first()
         if highest_resolution:
             highest_resolution.download()
@@ -55,9 +55,11 @@ def home():
             if 'search_url' in request.form and 'https' in url_text.lower():
                 stored_url = url_text
                 print(stored_url)
-                thumbnail = YouTube(url_text).thumbnail_url
-                title = f"Title: {YouTube(url_text).title}"
+                youtube = YouTube(url_text, use_po_token=True)
+                thumbnail = youtube.thumbnail_url
+                title = f"Title: {youtube.title}"
                 visibility = "visible"
+
         if "download_button_mine" in request.form:
             print(stored_url)
             status = "status: Downloading"
@@ -78,7 +80,12 @@ def home():
                     download_name=os.path.basename(video_path)
                 )
             
-    return render_template('index.html', thumbnail=thumbnail, title=title, un_visible=visibility)
+    return render_template(
+        'index.html', 
+        thumbnail=thumbnail, 
+        title=title, 
+        un_visible=visibility,
+        res_visibility=visibility)
 
 
 if __name__ == '__main__':
