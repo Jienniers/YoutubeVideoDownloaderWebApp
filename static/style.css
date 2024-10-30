@@ -7,18 +7,18 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100vh; /* Make sure the body covers the entire viewport height */
-    background: url('/static/images/background.png') center/cover no-repeat; /* Replace 'your-background-image.jpg' with the path to your image */
-    position: relative;
+    background-color: #15131d;
   }
   ._header {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    width: 70%;
     height: 100px;
-    background-image: linear-gradient(to right, #2c3e50, #3498db);
+    /* background-image: linear-gradient(to right, #2c3e50, #3498db); */
     display: flex;
+    background-color: #312e3f;
+    margin-top: 50px;
+    flex-direction: row; 
+    align-items: center; justify-content: center;
   }
   
   ._header img {
@@ -28,33 +28,35 @@ body {
     margin-top: 10px;
     box-sizing: border-box;
   }
-  ._body {
+  /* ._body {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(15, 130, 207, 0.4); /* Adjust the color and opacity as needed */
-  }
-._body ._title{
+    background-color: #15131d;
+  } */
+
+.title_div ._title{
     font-family: 'Roboto', sans-serif;
     color: white;
     text-align: center;
     font-size: 50px;
 } 
 .title_div{
-    margin-top: 120px;
+    margin-top: 70px;
 }
 /* CSS for the bubble box */
 .bubble-box {
     position: absolute;
-    top: 65%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 700px; /* Set the desired width */
     height: 450px;
     padding: 20px; /* Adjust padding as needed */
-    background: linear-gradient(to bottom right, #3498db, #1abc9c); /* Set the gradient background */
+    /* background: linear-gradient(to bottom right, #3498db, #1abc9c);  */
+    background-color: #312e3f;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow */
     color: #fff; /* Set the text color */
@@ -103,25 +105,32 @@ input[type="text"],
 }
 
 .bubble-box button {
-    border: none;
-    border-radius: 10px;
-    height: 40px;
-    padding: 10px 40px;
-    font-size: 20px;
-    font-family: 'Roboto', sans-serif;
-    cursor: pointer;
-    background-image: linear-gradient(to right, #7b4397, #dc2430);
-    color: #fff;
-    transition: background-color 1s, color 1s, transform 1s; /* Combine transitions */
-    align-self: center; /* Center the button horizontally */
-    margin-top: 30px;
+  border: none;
+  border-radius: 10px;
+  height: 40px;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+  background: linear-gradient(to right, #00796b, #0066cc); /* Lightened dark green to blue gradient */
+  color: #fff;
+  transition: background 0.5s ease, color 0.5s ease, transform 0.5s ease;
+  align-self: center;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .bubble-box button:hover {
-    background-image: linear-gradient(to right, #136a8a, #267871);
-    color: #fff; /* New text color on hover */
-    transform: scale(1.05); /* Optional: Add a scaling effect on hover */
+  background: linear-gradient(to right, #33b2a6, #4da6ff); /* Lightened hover gradient */
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
+
+
 
 ._thumbnail{
   border-radius: 20px;
@@ -145,13 +154,17 @@ input[type="text"],
   top: 60%;
   z-index:999;
 }
+
+.bubble-box-title{
+  text-align: center;
+}
 @media screen and (max-width: 768px) {
   .bubble-box{
     width: max-content;
-    margin-top: 0;
+    top: 65%;
   }
   ._body ._title{
-    font-size: 30px;
+    font-size: 10px;
   }
   .download_button {
     font-size: 10px;
