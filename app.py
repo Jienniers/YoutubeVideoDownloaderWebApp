@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, send_file, after_this_request
-from pytube import YouTube
+from pytubefix import YouTube
 import os
 import threading
 import time
