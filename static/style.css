@@ -171,13 +171,17 @@ input[type="text"],
   ._body ._title{
     font-size: 10px;
   }
-  .download_button {
-    font-size: 10px;
-  }
-}
-
-@media screen and (max-width: 768px) {
   .bubble-box{
     width: 80%;
+    left: 0%;
+    margin-left: 4.5%;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  .download_button {
+    width: 120px;
+    left: 35%;
   }
 }
