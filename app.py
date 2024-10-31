@@ -5,18 +5,106 @@ import threading
 import time
 from pytubefix.cli import on_progress
 import shutil
+from moviepy.editor import VideoFileClip, AudioFileClip
 
 app = Flask(__name__)
 
 def downloadVideo(url):
     try:
         yt = YouTube(url, use_po_token=True, on_progress_callback = on_progress)
-        streams = yt.streams.filter(res="1080p").first()
-        if streams:
-            streams.download("Videos/")
+
+        videoStreams = yt.streams.filter(res="1080p").first()
+        audioStreams = yt.streams.filter(only_audio=True).first()
+
+        if videoStreams and audioStreams:
+
             print(f"Downloading: {yt.title}")
-            print(f"Downloading {streams.resolution} resolution...")
-            return streams.default_filename
+            print(f"Downloading {videoStreams.resolution} resolution...")
+
+
+            videoStreams.download("Videos/")
+            audioStreams.download("Videos/")
+
+            print("\nDone Downloading")
+
+            VideoFileName = videoStreams.default_filename
+            AudioFileName = audioStreams.default_filename
+
+            if '|' in VideoFileName: 
+                VideoFileName = VideoFileName.replace('|', '')
+
+            if ':' in VideoFileName:
+                VideoFileName = VideoFileName.replace(':', '')
+
+            if '*' in VideoFileName:
+                VideoFileName = VideoPath.replace('*', '')
+
+            if '?' in VideoFileName:
+                VideoFileName = VideoFileName.replace('?', '')
+
+            if '"' in VideoFileName:
+                VideoFileName = VideoFileName.replace('"', '')
+
+            if '<' in VideoFileName:
+                VideoFileName = VideoFileName.replace('<', '')
+
+            if '>' in VideoFileName:
+                VideoFileName = VideoFileName.replace('>', '')
+
+            if '/' in VideoFileName:
+                VideoFileName = VideoFileName.replace('/', '')
+
+            if "\\" in VideoFileName:
+                VideoFileName = VideoFileName.replace("\\", "")
+
+                #Audio Path
+
+            if '|' in AudioFileName: 
+                AudioFileName = AudioFileName.replace('|', '')
+
+            if ':' in AudioFileName:
+                AudioFileName = AudioFileName.replace(':', '')
+
+            if '*' in AudioFileName:
+                AudioFileName = AudioFileName.replace('*', '')
+
+            if '?' in AudioFileName:
+                AudioFileName = AudioFileName.replace('?', '')
+
+            if '"' in AudioFileName:
+                AudioFileName = AudioFileName.replace('"', '')
+
+            if '<' in AudioFileName:
+                AudioFileName = AudioFileName.replace('<', '')
+
+            if '>' in AudioFileName:
+                AudioFileName = AudioFileName.replace('>', '')
+
+            if '/' in AudioFileName:
+                AudioFileName = AudioFileName.replace('/', '')
+
+            if "\\" in AudioFileName:
+                AudioFileName = AudioFileName.replace("\\", "")
+
+            VideoPath = os.path.join('Videos', VideoFileName)
+            AudioPath = os.path.join('Videos', AudioFileName)
+            OutputPath = os.path.join('Videos', "Final " + VideoFileName)
+
+
+            video_clip = VideoFileClip(VideoPath)
+            audio_clip = AudioFileClip(AudioPath)
+
+            final_clip = video_clip.set_audio(audio_clip)
+
+            final_clip.write_videofile(OutputPath, codec="libx264", audio_codec="aac")
+
+            print("Merging complete!")
+
+            print(f"VideoPath: {VideoPath}")
+            print(f"AudioPath: {AudioPath}")
+            print(f"SoundPath: {OutputPath}")
+
+            return "Final " + videoStreams.default_filename
         else:
             print("No streams available for the video.")
             return None
@@ -53,33 +141,6 @@ def home():
             print(stored_url)
             status = "status: Downloading"
             filename = downloadVideo(stored_url)
-            
-            if '|' in filename: 
-                filename = filename.replace('|', '')
-
-            if ':' in filename:
-                filename = filename.replace(':', '')
-
-            if '*' in filename:
-                filename = filename.replace('*', '')
-
-            if '?' in filename:
-                filename = filename.replace('?', '')
-
-            if '"' in filename:
-                filename = filename.replace('"', '')
-
-            if '<' in filename:
-                filename = filename.replace('<', '')
-
-            if '>' in filename:
-                filename = filename.replace('>', '')
-
-            if '/' in filename:
-                filename = filename.replace('/', '')
-
-            if "\\" in filename:
-                filename = filename.replace("\\", "")
 
             video_path = "Videos\\" + filename
 
