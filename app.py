@@ -8,15 +8,15 @@ import shutil
 
 app = Flask(__name__)
 
-def download_video(url):
+def downloadVideo(url):
     try:
         yt = YouTube(url, use_po_token=True, on_progress_callback = on_progress)
-        resoltuion = yt.streams.filter(res="1080p").first()
-        if resoltuion:
-            resoltuion.download("Videos/")
+        streams = yt.streams.filter(res="1080p").first()
+        if streams:
+            streams.download("Videos/")
             print(f"Downloading: {yt.title}")
-            print(f"Downloading {resoltuion.resolution} resolution...")
-            return resoltuion.default_filename
+            print(f"Downloading {streams.resolution} resolution...")
+            return streams.default_filename
         else:
             print("No streams available for the video.")
             return None
@@ -24,9 +24,10 @@ def download_video(url):
         print(f"Error: {e}")
         return None
 
-def delete_file_after_delay(delay_seconds=5):
+def deleteFileAfterDelay(delay_seconds=5):
     time.sleep(delay_seconds)
     shutil.rmtree("Videos")
+
 
 stored_url = ""
 @app.route('/', methods=['GET', 'POST'])
@@ -51,14 +52,44 @@ def home():
         if "download_button_mine" in request.form:
             print(stored_url)
             status = "status: Downloading"
-            video_path = "Videos/" + download_video(stored_url)
+            filename = downloadVideo(stored_url)
+            
+            if '|' in filename: 
+                filename = filename.replace('|', '')
+
+            if ':' in filename:
+                filename = filename.replace(':', '')
+
+            if '*' in filename:
+                filename = filename.replace('*', '')
+
+            if '?' in filename:
+                filename = filename.replace('?', '')
+
+            if '"' in filename:
+                filename = filename.replace('"', '')
+
+            if '<' in filename:
+                filename = filename.replace('<', '')
+
+            if '>' in filename:
+                filename = filename.replace('>', '')
+
+            if '/' in filename:
+                filename = filename.replace('/', '')
+
+            if "\\" in filename:
+                filename = filename.replace("\\", "")
+
+            video_path = "Videos\\" + filename
+
+            print(video_path)
 
             if video_path:
                 @after_this_request
                 def remove_file(response):
-                    threading.Thread(target=delete_file_after_delay).start()
+                    threading.Thread(target=deleteFileAfterDelay).start()
                     return response
-                
 
                 return send_file(
                     video_path,
