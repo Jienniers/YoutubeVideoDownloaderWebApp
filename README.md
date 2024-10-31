@@ -14,7 +14,7 @@ Install Project modules
     
 ## Authors
 
-- [@Drew101](https://github.com/JustinDrew101)
+- [@Jienniers](https://github.com/Jienniers)
 
 
 ## Tech Stack
@@ -23,18 +23,14 @@ Install Project modules
 
 **Server:** Flask
 
-
-![Logo](https://cdn.discordapp.com/attachments/1074754322585366671/1200445399199137832/small_logo.png)
-
-
 ## Screenshots
 
-![App Screenshot](https://cdn.discordapp.com/attachments/1074754322585366671/1200446757918748692/image.png)
+![App Screenshot](https://github.com/Jienniers/YoutubeDownloaderWebApp/blob/main/screenshots/Screenshot1.png)
 
-![App Screenshot](https://cdn.discordapp.com/attachments/1074754322585366671/1200446530092552212/image.png)
+![App Screenshot](https://github.com/Jienniers/YoutubeDownloaderWebApp/blob/main/screenshots/Screenshot2.png)
 
 
 ## Feedback
 
-If you have any feedback, please reach out to us at codeMaestroy105@outlook.com
+If you have any feedback, Kindly post them in [@Issues](https://github.com/Jienniers/YoutubeDownloaderWebApp/issues)
 
