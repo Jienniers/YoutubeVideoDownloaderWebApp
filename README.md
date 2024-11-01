@@ -1,16 +1,20 @@
 
 # Youtube Video Downloader Web App
 
-A Web App for downloading youtube videos at high quality
+A Web App for downloading youtube videos at 1080p Quality
+
+## Requirement
+Make sure that the video you are trying to download has the minimum resolution of 1080p otherwise, It will give error.
 
 
 ## Installation
 
-Install Project modules
+The Program installs all the modules it self though if it doesn't install you can manually install them by using this command: 
 
 ```bash
-  pip install flask pytube
+  pip install flask pytubefix moviepy
 ```
+**Note** After the program has finished installing pytubefix by itself it might not work and give ImportError you just need to re run the program to fix it or manually first install all the packages before running the program.
     
 ## Authors
 
@@ -19,9 +23,9 @@ Install Project modules
 
 ## Tech Stack
 
-**Client:** HTML, CSS
+**Frontend:** HTML, CSS
 
-**Server:** Flask
+**Backend:** Flask
 
 ## Screenshots
 
