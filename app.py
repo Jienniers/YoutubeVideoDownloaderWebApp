@@ -1,11 +1,53 @@
-from flask import Flask, render_template, request, send_file, after_this_request
-from pytubefix import YouTube
+import pip
 import os
 import threading
 import time
-from pytubefix.cli import on_progress
 import shutil
-from moviepy.editor import VideoFileClip, AudioFileClip
+import sys
+import subprocess
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+try:
+    from pytubefix.cli import on_progress
+    from pytubefix import YouTube
+except ImportError:
+    print("Module 'pytubefix' is not installed. Installing now.")
+    install('pytubefix')
+    try:
+        from pytubefix.cli import on_progress
+        from pytubefix import YouTube
+    except ImportError as e:
+        print(f"Failed to import 'pytubefix' after installation: {e}")
+        sys.exit(1)
+
+try:
+    from flask import Flask, render_template, request, send_file, after_this_request
+except ImportError:
+    if sys.platform.startswith("win"):
+        os.system("python -m pip install flask")
+    else:
+        os.system("python3 -m pip install flask")
+    try:
+        from flask import Flask, render_template, request, send_file, after_this_request
+    except ImportError:
+        print("You need python3 installed! Main")
+        exit()
+
+
+try:
+    from moviepy.editor import VideoFileClip, AudioFileClip
+except ImportError:
+    if sys.platform.startswith("win"):
+        os.system("python -m pip install moviepy")
+    else:
+        os.system("python3 -m pip install moviepy")
+    try:
+        from moviepy.editor import VideoFileClip, AudioFileClip
+    except ImportError:
+        print("You need python3 installed! Main")
+        exit()
 
 app = Flask(__name__)
 
@@ -124,22 +166,24 @@ def home():
     thumbnail = ""
     title = ""
     visibility = "hidden"
-
+    status = "Status: "
     if request.method == 'POST':
         url_text = request.form['search_url']
 
         if 'search' in request.form:
             if 'search_url' in request.form and 'https' in url_text.lower():
+                status = "Status: Processing...!"
                 stored_url = url_text
                 print(stored_url)
                 youtube = YouTube(url_text, use_po_token=True)
                 thumbnail = youtube.thumbnail_url
                 title = f"Title: {youtube.title}"
                 visibility = "visible"
+                status = "Status: "
 
         if "download_button_mine" in request.form:
             print(stored_url)
-            status = "status: Downloading"
+            status = "Status: Downloading...!"
             filename = downloadVideo(stored_url)
 
             video_path = "Videos\\" + filename
@@ -165,7 +209,7 @@ def home():
         thumbnail=thumbnail, 
         title=title, 
         un_visible=visibility,
-        res_visibility=visibility)
+        res_visibility=visibility,)
 
 
 if __name__ == '__main__':
