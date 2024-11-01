@@ -6,14 +6,20 @@ A Web App for downloading youtube videos at 1080p Quality
 ## Requirement
 Make sure that the video you are trying to download has the minimum resolution of 1080p otherwise, It will give error.
 
-
 ## Installation
+
+Makesure to have python installed to run this program you can install it from [here](https://www.python.org/downloads/).
 
 The Program installs all the modules it self though if it doesn't install you can manually install them by using this command: 
 
 ```bash
   pip install flask pytubefix moviepy
 ```
+After that you can open command line interface in the directly where this program and its files are located and run this command:
+```bash
+  python app.py
+```
+
 **Note** After the program has finished installing pytubefix by itself it might not work and give ImportError you just need to re run the program to fix it or manually first install all the packages before running the program.
     
 ## Authors
