@@ -152,11 +152,10 @@ input[type="text"],
 }
 
 .download_button{
-  margin-top: 100px;
   float: right;
   position: absolute;
   left: 52%;
-  top: 60%;
+  top: 65%;
   z-index:999;
 }
 

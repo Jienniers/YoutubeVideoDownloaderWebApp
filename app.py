@@ -153,6 +153,22 @@ def downloadVideo(url):
     except Exception as e:
         print(f"Error: {e}")
         return None
+    
+
+def downloadAudio(url):
+    try:
+        yt = YouTube(url, use_po_token=True, on_progress_callback = on_progress)
+
+        audioStreams = yt.streams.filter(only_audio=True).first()
+
+        if audioStreams:
+            audioStreams.download('Audios/')
+
+            return audioStreams.default_filename
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
 
 def deleteFileAfterDelay(delay_seconds=5):
     time.sleep(delay_seconds)
@@ -181,35 +197,51 @@ def home():
                 visibility = "visible"
                 status = "Status: "
 
-        if "download_button_mine" in request.form:
+        elif "download_button_mine" in request.form:
             print(stored_url)
             status = "Status: Downloading...!"
-            filename = downloadVideo(stored_url)
+            videoFilename = downloadVideo(stored_url)
 
-            video_path = "Videos\\" + filename
+            videoPath = "Videos\\" + videoFilename
 
-            print(video_path)
+            print(videoPath)
 
-            if video_path:
+            if videoPath:
                 @after_this_request
                 def remove_file(response):
                     threading.Thread(target=deleteFileAfterDelay).start()
                     return response
 
                 return send_file(
-                    video_path,
+                    videoPath,
                     as_attachment=True,
-                    download_name=os.path.basename(video_path)
+                    download_name=os.path.basename(videoPath)
                 )
             else:
-                return "File download failed", 404
+                return "Video File download failed", 404
+            
+        elif "download_audio_button_mine" in request.form:
+
+            audioFileName = downloadAudio(stored_url)
+
+            audioPath = "Audios\\" + audioFileName
+
+            if os.path.exists(audioPath):
+                return send_file(
+                    audioPath,
+                    as_attachment=True,
+                    download_name=os.path.basename(audioPath)
+                )
+
+            else:
+                return "Audio File download failed", 404
             
     return render_template(
         'index.html', 
         thumbnail=thumbnail, 
         title=title, 
         un_visible=visibility,
-        res_visibility=visibility,)
+        res_visibility=visibility)
 
 
 if __name__ == '__main__':
